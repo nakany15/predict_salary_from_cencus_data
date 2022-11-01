@@ -1,0 +1,6 @@
+stages:
+  clean_data:
+    cmd: python starter/starter/clean_data.py hydra.job.chdir=False
+    outs: 
+      - ${clean_data.output_csv}
+  

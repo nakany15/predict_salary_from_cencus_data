@@ -1,4 +1,6 @@
 [core]
     remote = cencus-bucket
+[hydra]
+    enabled = True
 ['remote "cencus-bucket"']
     url = s3://cencus-bucket

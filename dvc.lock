@@ -1,0 +1,8 @@
+schema: '2.0'
+stages:
+  clean_data:
+    cmd: python starter/starter/clean_data.py hydra.job.chdir=False
+    outs:
+    - path: starter/data/processed/census_cleaned.csv
+      md5: 109c3c826741a590001de91b594b05e3
+      size: 3518605

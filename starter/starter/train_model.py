@@ -5,12 +5,12 @@ from sklearn.model_selection import train_test_split
 # Add the necessary imports for the starter code.
 import pandas as pd
 from ml.data import process_data
-from ml.model import train_model
+from ml.model import train_model, compute_model_metrics
 import pickle
 
 # Add code to load in the data.
-data = pd.read_csv('starter/data/cencus.csv')
-data.columns = [col.strip() for col in data.columns]
+data = pd.read_csv('starter/data/processed/cencus_cleaned.csv')
+
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
 train, test = train_test_split(data, test_size=0.20)
 
@@ -34,3 +34,33 @@ X_train, y_train, encoder, lb = process_data(
 model = train_model(X_train, y_train)
 with open('starter/model/model.pkl', 'wb') as f:
     pickle.dump(model, f)
+
+def slice_performance(df, category, label, cat_features, encoder, lb, clf):
+    cat_value_list = df[category].unique()
+    for cat_value in cat_value_list:
+        df2 = df.loc[df[category] == cat_value]
+        X_test, y_test, encoder, lb = process_data(
+            df2, 
+            label = label,
+            categorical_features=cat_features, 
+            training=False,
+            encoder=encoder,
+            lb = lb
+        )
+
+        print(
+            cat_value, 
+            compute_model_metrics(
+                y_test, 
+                clf.predict(X_test)
+            )
+        )
+
+slice_performance(
+    data, 
+    'race', 
+    'salary', 
+    cat_features, 
+    encoder, 
+    lb, 
+    model)

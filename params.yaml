@@ -1,0 +1,5 @@
+clean_data:
+  data_dir: starter/data
+  input_csv: census.csv
+  output_csv: starter/data/processed/census_cleaned.csv
+
