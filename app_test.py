@@ -11,15 +11,15 @@ def example_below(base_url: str):
         "fnlgt": 77516,
         "education": "Bachelors",
         "education_num": 13,
-        "marital_status": "Never-married",
+        "marital-status": "Never-married",
         "occupation": "Adm-clerical",
         "relationship": "Not-in-family",
         "race": "White",
         "sex": "Male",
-        "capital_gain": 2174,
-        "capital_loss": 0,
-        "hours_per_week": 40,
-        "native_country": "United-States"
+        "capital-gain": 2174,
+        "capital-loss": 0,
+        "hours-per_week": 40,
+        "native-country": "United-States"
     }
 
     present_prediction(base_url, body)
@@ -32,15 +32,15 @@ def example_above(base_url):
         "fnlgt": 45781, 
         "education": "Masters", 
         "education_num": 14,
-        "marital_status": "Never-married", 
+        "marital-status": "Never-married", 
         "occupation": "Prof-specialty", 
         "relationship": "Not-in-family",
         "race": "White", 
         "sex": "Female", 
         "capital_gain": 14084, 
-        "capital_loss": 0, 
-        "hours_per_week": 50,
-        "native_country": "United-States"
+        "capital-loss": 0, 
+        "hours-per-week": 50,
+        "native-country": "United-States"
         }
 
     present_prediction(base_url, body)

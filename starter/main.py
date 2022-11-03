@@ -45,24 +45,31 @@ class ModelParams(BaseModel):
     workclass: str
     fnlgt: int
     education: str
-    education_num: int
-    marital_status: str 
+    education_num: int = Field(alias="education-num")
+    marital_status: str = Field(alias="marital-status")
     occupation: str
     relationship: str
     race: str
     sex: str
-    capital_gain: int 
-    capital_loss: int 
-    hours_per_week: int 
-    native_country: str 
+    capital_gain: int = Field(alias="capital-gain")
+    capital_loss: int = Field(alias="capital-loss")
+    hours_per_week: int = Field(alias="hours-per-week")
+    native_country: str = Field(alias="native-country")
 
 
 @app.post("/predict")
 def predict(params: ModelParams):
-    df_input = pd.DataFrame.from_dict([params.dict()])
+    df_input = pd.DataFrame.from_dict([params.dict(by_alias=True)])
 
-    cat_features = ['workclass', 'education', 'marital-status', 'occupation',
-                            'relationship', 'race', 'sex', 'native-country']
+    cat_features = [
+        'workclass', 
+        'education', 
+        'marital-status', 
+        'occupation',
+        'relationship', 
+        'race', 
+        'sex', 
+        'native-country']
     X, _, _, _ = process_data(
         df_input, 
         cat_features, 
