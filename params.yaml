@@ -1,5 +1,28 @@
 clean_data:
-  data_dir: starter/data
+  input_dir: starter/data
   input_csv: census.csv
-  output_csv: starter/data/processed/census_cleaned.csv
+  output_dir: starter/data/processed
+  output_csv: census_cleaned.csv
 
+model:
+  input_dir: starter/data/processed
+  input_csv: census_cleaned.csv
+  test_size: 0.20
+  random_state: 42
+  categorical_features: 
+    - workclass
+    - education
+    - marital-status
+    - occupation
+    - relationship
+    - race
+    - sex
+    - native-country
+  target: salary
+  output_dir: starter/model
+  output_model: model.pkl
+  output_encoder: encoder.pkl
+  output_lb: lb.pkl
+  slices: 
+    - sex
+    - race

@@ -6,3 +6,22 @@ stages:
     - path: starter/data/processed/census_cleaned.csv
       md5: 109c3c826741a590001de91b594b05e3
       size: 3518605
+  train_model:
+    cmd: python starter/starter/train_model.py hydra.job.chdir=False
+    deps:
+    - path: starter/data/processed/census_cleaned.csv
+      md5: 109c3c826741a590001de91b594b05e3
+      size: 3518605
+    - path: starter/starter/clean_data.py
+      md5: bf5c5ce7abb17950fef0a903e62a7c2a
+      size: 871
+    outs:
+    - path: starter/model/encoder.pkl
+      md5: 78c71e8748e1d5ca2cc41c70067d5856
+      size: 1924
+    - path: starter/model/lb.pkl
+      md5: 7eaccab18f356d3545876f18afebbf40
+      size: 358
+    - path: starter/model/model.pkl
+      md5: de21e9cac0000aca3eb2611495b36b91
+      size: 1575

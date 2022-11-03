@@ -1,7 +1,10 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.linear_model import LogisticRegression
-
+from ml.data import process_data
+import logging
 # Optional: implement hyperparameter tuning.
+logger = logging.getLogger(__name__)
+
 def train_model(X_train, y_train):
     """
     Trains a machine learning model and returns it.
@@ -59,3 +62,25 @@ def inference(model, X):
         Predictions from the model.
     """
     return model.predict(X)
+
+
+def slice_performance(df, category, label, cat_features, encoder, lb, clf):
+    cat_value_list = df[category].unique()
+    for cat_value in cat_value_list:
+        df2 = df.loc[df[category] == cat_value]
+        X_test, y_test, encoder, lb = process_data(
+            df2, 
+            label = label,
+            categorical_features=cat_features, 
+            training=False,
+            encoder=encoder,
+            lb = lb
+        )
+
+        precision, recall, fbeta = compute_model_metrics(
+            y_test, 
+            clf.predict(X_test)
+        )
+        logger.info(f'precision score for {cat_value}: {precision}') 
+        logger.info(f'recall score for {cat_value}: {recall}') 
+        logger.info(f'fbeta score for {cat_value}: {fbeta}') 

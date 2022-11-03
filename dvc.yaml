@@ -2,5 +2,13 @@ stages:
   clean_data:
     cmd: python starter/starter/clean_data.py hydra.job.chdir=False
     outs: 
-      - ${clean_data.output_csv}
-  
+      - ${clean_data.output_dir}/${clean_data.output_csv}
+  train_model:
+    cmd: python starter/starter/train_model.py hydra.job.chdir=False
+    deps:
+      - ${clean_data.output_dir}/${clean_data.output_csv}
+      - starter/starter/clean_data.py
+    outs:
+      - ${model.output_dir}/${model.output_model}
+      - ${model.output_dir}/${model.output_encoder}
+      - ${model.output_dir}/${model.output_lb}
