@@ -4,60 +4,56 @@ import requests
 from typing import Dict
 
 
-def example_below(base_url: str):
+def example_1(base_url: str):
     body = {
         "age": 39,
         "workclass": "State-gov",
-        "fnlgt": 77516,
+        "fnlgt": 76532,
         "education": "Bachelors",
-        "education_num": 13,
+        "education-num": 12,
         "marital-status": "Never-married",
         "occupation": "Adm-clerical",
         "relationship": "Not-in-family",
         "race": "White",
         "sex": "Male",
-        "capital-gain": 2174,
+        "capital-gain": 2222,
         "capital-loss": 0,
-        "hours-per_week": 40,
+        "hours-per-week": 40,
         "native-country": "United-States"
     }
 
-    present_prediction(base_url, body)
+    post_prediction(base_url, body)
 
 
-def example_above(base_url):
+def example_2(base_url):
     body = {
-        "age": 31, 
+        "age": 28, 
         "workclass": "Private", 
-        "fnlgt": 45781, 
+        "fnlgt": 54312, 
         "education": "Masters", 
-        "education_num": 14,
+        "education-num": 14,
         "marital-status": "Never-married", 
         "occupation": "Prof-specialty", 
         "relationship": "Not-in-family",
         "race": "White", 
         "sex": "Female", 
-        "capital_gain": 14084, 
-        "capital-loss": 0, 
-        "hours-per-week": 50,
+        "capital-gain": 14520, 
+        "capital-loss": 2, 
+        "hours-per-week": 48,
         "native-country": "United-States"
         }
 
-    present_prediction(base_url, body)
+    post_prediction(base_url, body)
 
 
-def present_prediction(base_url, body):
-    response = make_prediction(f"{base_url}/predict", body)
-    print(f"Expect person with {body['education']} at age {body['age']} to earn {response['prediction']}")
-
-
-def make_prediction(url: str, body: Dict):
-    response = requests.post(url, json=body)
+def post_prediction(base_url, body):
+    response = requests.post(f"{base_url}/predict", json=body)
     print(f"Response status code: {response.status_code}")
-    return response.json()
+    return_json = response.json()
+    print(f"Expect person with {body['education']} at age {body['age']} to earn {return_json['prediction']}")
 
 
 if __name__ == '__main__':
     base_url = "https://nakany-income-prediction.herokuapp.com"
-    example_below(base_url)
-    example_above(base_url)
+    example_1(base_url)
+    example_2(base_url)

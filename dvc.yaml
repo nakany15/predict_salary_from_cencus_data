@@ -1,6 +1,8 @@
 stages:
   clean_data:
     cmd: python starter/starter/clean_data.py hydra.job.chdir=False
+    deps:
+      - ${clean_data.input_dir}/${clean_data.input_csv}
     outs: 
       - ${clean_data.output_dir}/${clean_data.output_csv}
   train_model:
