@@ -5,6 +5,7 @@ import pandas as pd
 from fastapi import FastAPI, Body
 from pydantic import BaseModel, Field
 import pickle
+import os
 
 from starter.starter.ml.data import process_data
 from starter.starter.ml.model import inference
@@ -12,6 +13,14 @@ from starter.starter.ml.model import inference
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
+
+if "DYNO" in os.environ and os.path.isdir(".dvc"):
+    os.system("dvc config core.no_scm true")
+    if os.system("dvc pull") != 0:
+        exit("dvc pull failed")
+    os.system("rm -r .dvc .apt/usr/lib/dvc")
+
+    
 app = FastAPI(title="Income Prediction 🤖",
               description="Machine Learning model trained on the [Census Income Data Set](https://archive.ics.uci.edu/ml/datasets/census+income)")
 with open('./starter/model/model.pkl', 'rb') as f:
