@@ -58,6 +58,6 @@ def make_prediction(url: str, body: Dict):
 
 
 if __name__ == '__main__':
-    base_url = "https://nakany-income-prediction.herokuapp.com/predict"
+    base_url = "https://nakany-income-prediction.herokuapp.com"
     example_below(base_url)
     example_above(base_url)
