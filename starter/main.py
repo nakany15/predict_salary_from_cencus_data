@@ -56,6 +56,9 @@ class ModelParams(BaseModel):
     native_country: str = Field(alias="native-country")
 
 
+@app.get("/")
+def greet():
+    return {"message": "This is an Income prediction API!!"}
 @app.post("/predict")
 def predict(params: ModelParams):
     df_input = pd.DataFrame.from_dict([params.dict(by_alias=True)])
