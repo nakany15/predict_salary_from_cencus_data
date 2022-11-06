@@ -1,6 +1,6 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.linear_model import LogisticRegression
-from starter.starter.ml.data import process_data
+from starter.ml.data import process_data
 import logging
 # Optional: implement hyperparameter tuning.
 logger = logging.getLogger(__name__)
