@@ -30,10 +30,9 @@ with open('./starter/model/encoder.pkl', 'rb') as f:
 with open('./starter/model/lb.pkl', 'rb') as f:
     lb = pickle.load(f)
 
-def get_prediction(param1, param2):
-    
-    x = [[param1, param2]]
 
+def get_prediction(param1, param2):
+    x = [[param1, param2]]
     y = model.predict(x)[0]  # just get single value
     prob = model.predict_proba(x)[0].tolist()  # send to list for return
 
