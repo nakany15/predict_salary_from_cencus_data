@@ -29,3 +29,6 @@ stages:
     - path: starter/model/model.pkl
       md5: de21e9cac0000aca3eb2611495b36b91
       size: 1575
+    - path: starter/model/slice_output.json
+      md5: 37825bad38aa1b08d23ab0bd4b3234cb
+      size: 950

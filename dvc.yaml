@@ -14,3 +14,4 @@ stages:
       - ${model.output_dir}/${model.output_model}
       - ${model.output_dir}/${model.output_encoder}
       - ${model.output_dir}/${model.output_lb}
+      - ${model.output_dir}/${model.output_slice}

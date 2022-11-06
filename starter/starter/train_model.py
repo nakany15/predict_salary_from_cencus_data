@@ -5,15 +5,40 @@ from sklearn.model_selection import train_test_split
 # Add the necessary imports for the starter code.
 import pandas as pd
 from ml.data import process_data
-from ml.model import train_model, compute_model_metrics, slice_performance
+from ml.model import train_model, compute_model_metrics
 import pickle
 import logging
 import hydra
 import os
+import json
 
 # Add code to load in the data.
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
+
+def slice_test_performance(test, X_test, y_test, slice_cat_list, model):
+    slice_scores = {}
+    for slice in slice_cat_list:
+        slice_scores[slice] = {}
+        cat_value_list = test[slice].unique()
+        for cat_value in cat_value_list:
+            slice_scores[slice][cat_value] = {}
+            test_sliced_idx = test.loc[test[slice] == cat_value].index
+            X_test_sliced = X_test[test_sliced_idx]
+            y_test_sliced = y_test[test_sliced_idx]
+            precision, recall, fbeta = compute_model_metrics(
+                y_test_sliced, 
+                model.predict(X_test_sliced)
+            )
+            slice_scores[slice][cat_value]
+            slice_scores[slice][cat_value]['precision'] = precision
+            slice_scores[slice][cat_value]['recall'] = recall
+            slice_scores[slice][cat_value]['fbeta'] = fbeta
+            logger.info(f'precision score for {cat_value}: {precision}') 
+            logger.info(f'recall score for {cat_value}: {recall}') 
+            logger.info(f'fbeta score for {cat_value}: {fbeta}') 
+    return slice_scores
+
 
 @hydra.main(config_path= '../../',config_name='params')
 def main(cfg):
@@ -33,6 +58,10 @@ def main(cfg):
     lb_file_path = os.path.join(
         config['output_dir'], 
         config['output_lb']
+    )
+    slice_file_path = os.path.join(
+        config['output_dir'], 
+        config['output_slice']
     )
 
     data = pd.read_csv(os.path.join(
@@ -82,19 +111,10 @@ def main(cfg):
     logger.info(f'precision score : {precision}') 
     logger.info(f'recall score : {recall}') 
     logger.info(f'fbeta score : {fbeta}') 
+    slice_scores = slice_test_performance(test, X_test, y_test, slice_list, model)
+    logger.info(f'{slice_scores}')
+    with open(slice_file_path, mode="w") as f:
+        json.dump(slice_scores,f, indent=2, ensure_ascii=False)
 
-    for slice in slice_list:
-        cat_value_list = test[slice].unique()
-        for cat_value in cat_value_list:
-            test_sliced_idx = test.loc[test[slice] == cat_value].index
-            X_test_sliced = X_test[test_sliced_idx]
-            y_test_sliced = y_test[test_sliced_idx]
-            precision, recall, fbeta = compute_model_metrics(
-                y_test_sliced, 
-                model.predict(X_test_sliced)
-            )
-            logger.info(f'precision score for {cat_value}: {precision}') 
-            logger.info(f'recall score for {cat_value}: {recall}') 
-            logger.info(f'fbeta score for {cat_value}: {fbeta}') 
 if __name__ == '__main__':
     main()

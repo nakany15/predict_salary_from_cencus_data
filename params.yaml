@@ -23,6 +23,7 @@ model:
   output_model: model.pkl
   output_encoder: encoder.pkl
   output_lb: lb.pkl
+  output_slice: slice_output.json
   slices: 
     - sex
     - race
