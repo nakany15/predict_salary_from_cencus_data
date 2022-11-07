@@ -23,11 +23,11 @@ if "DYNO" in os.environ and os.path.isdir(".dvc"):
     
 app = FastAPI(title="Income Prediction 🤖",
               description="Machine Learning model trained on the [Census Income Data Set](https://archive.ics.uci.edu/ml/datasets/census+income)")
-with open('./model/model.pkl', 'rb') as f:
+with open('./starter/starter/model/model.pkl', 'rb') as f:
     model = pickle.load(f)
-with open('./model/encoder.pkl', 'rb') as f:
+with open('./starter/starter/model/encoder.pkl', 'rb') as f:
     encoder = pickle.load(f)
-with open('./model/lb.pkl', 'rb') as f:
+with open('./starter/starter/model/lb.pkl', 'rb') as f:
     lb = pickle.load(f)
 
 
