@@ -1,6 +1,6 @@
 import logging
 
-from starter.main import ModelParams, app
+from main import ModelParams, app
 import pytest
 from fastapi.testclient import TestClient
 
