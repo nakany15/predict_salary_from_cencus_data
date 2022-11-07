@@ -2,3 +2,5 @@
 /starter/model/*.pkl
 /**/*.ipynb
 outputs/**
+.pytest_cacher/**
+.ipynb_checkpoints/**
